@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study: Warehouse Management & ERP Implementation | Caresoft Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1a1410;
+      --ink-light: #4a3f35;
+      --ink-muted: #8a7968;
+      --paper: #f5f0e8;
+      --paper-warm: #ede8dc;
+      --accent: #c44a1a;
+      --accent-light: #f0e0d6;
+      --rule: #d4cabb;
+      --green: #2a5c3f;
+      --green-light: #d4e8dc;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+      padding: 14px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .masthead span { color: var(--accent); margin: 0 8px; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 64px 32px 48px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .kicker::after {
+      content: '';
+      display: inline-block;
+      height: 1px;
+      width: 48px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .deck {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--ink-light);
+      line-height: 1.6;
+      max-width: 680px;
+      margin-bottom: 36px;
+    }
+
+    .byline {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .byline-dot { color: var(--rule); }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .stats-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 0 24px;
+      border-right: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.6);
+      line-height: 1.5;
+    }
+
+    /* ── BODY ── */
+    .article-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 64px 32px;
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .main-column > * + * { margin-top: 28px; }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-top: 52px !important;
+      padding-top: 32px;
+      border-top: 2px solid var(--ink);
+    }
+
+    h2:first-child { margin-top: 0 !important; border-top: none; padding-top: 0; }
+
+    p { color: var(--ink-light); }
+
+    /* Drop cap */
+    .drop-cap::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 5.2rem;
+      font-weight: 900;
+      float: left;
+      line-height: 0.78;
+      margin: 8px 12px -4px 0;
+      color: var(--accent);
+    }
+
+    /* Pull quote */
+    .pull-quote {
+      border-left: 4px solid var(--accent);
+      padding: 20px 24px;
+      background: var(--accent-light);
+      margin: 36px 0 !important;
+    }
+
+    .pull-quote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--ink);
+      line-height: 1.5;
+      margin: 0 !important;
+    }
+
+    /* Problem/Solution callout boxes */
+    .callout {
+      border: 1.5px solid var(--rule);
+      padding: 28px 28px 24px;
+      background: var(--paper-warm);
+      margin: 36px 0 !important;
+    }
+
+    .callout-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+    }
+
+    .callout ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .callout ul li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink);
+      font-size: 0.95rem;
+      display: flex;
+      gap: 12px;
+    }
+
+    .callout ul li:last-child { border-bottom: none; }
+
+    .callout ul li::before {
+      content: '—';
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Results box */
+    .results-box {
+      background: var(--green);
+      color: #fff;
+      padding: 32px 28px;
+      margin: 36px 0 !important;
+    }
+
+    .results-box .callout-title { color: rgba(255,255,255,0.6); }
+
+    .results-box ul li {
+      border-bottom-color: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    .results-box ul li::before { color: #7ecba0; }
+
+    /* ── SIDEBAR ── */
+    .sidebar { position: sticky; top: 32px; }
+
+    .sidebar > * + * { margin-top: 32px; }
+
+    .sidebar-card {
+      border: 1.5px solid var(--rule);
+      padding: 24px 20px;
+      background: var(--paper-warm);
+    }
+
+    .sidebar-card-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .sidebar-fact {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.88rem;
+    }
+
+    .sidebar-fact:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .sidebar-fact strong {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .sidebar-fact span { color: var(--ink); font-weight: 400; }
+
+    .toc a {
+      display: block;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink-light);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+
+    .toc a:hover { color: var(--accent); }
+
+    .toc a:last-child { border-bottom: none; }
+
+    /* ── DIVIDER ── */
+    .section-rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(245,240,232,0.5);
+      text-align: center;
+      padding: 28px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .article-body { grid-template-columns: 1fr; gap: 0; }
+      .sidebar { position: static; margin-top: 48px; }
+      .stats-inner { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); padding: 24px 0; }
+      .stat:last-child { border-bottom: none; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero, .stats-strip, .article-body {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .stats-strip { animation-delay: 0.15s; }
+    .article-body { animation-delay: 0.25s; }
+  </style>
+</head>
+<body>
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    Supply Chain & Operations Review <span>✦</span> Case Study Series <span>✦</span> Warehouse Management
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="kicker">Industry Case Study</div>
+    <h1>From <em>$18 Million</em> of Deadstock to a Lean, High-Performance Warehouse</h1>
+    <p class="deck">How a leading manufacturer eliminated chronic inventory imbalances, overhauled its warehouse layout, and successfully migrated to a new ERP — cutting non-moving stock by 30% and boosting picking productivity by 20%.</p>
+    <div class="byline">
+      <span>Based on Caresoft Global Case Study</span>
+      <span class="byline-dot">·</span>
+      <span>Manufacturing & Logistics</span>
+      <span class="byline-dot">·</span>
+      <span>ERP Implementation</span>
+    </div>
+  </header>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat">
+        <div class="stat-num">30%</div>
+        <div class="stat-label">Reduction in non-moving<br>"D" part inventory value</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">20%</div>
+        <div class="stat-label">Increase in warehouse<br>picking productivity</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">$18M</div>
+        <div class="stat-label">Worth of deadstock<br>identified and addressed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLE BODY -->
+  <div class="article-body">
+
+    <!-- MAIN COLUMN -->
+    <main class="main-column">
+
+      <h2>Background</h2>
+      <p class="drop-cap">A large manufacturing company found itself caught in a paradox familiar to many operations managers: its warehouse was simultaneously overstuffed and understocked. Shelves groaned under the weight of slow-moving components nobody needed, while the parts that kept production lines running were consistently nowhere to be found.</p>
+      <p>Making matters worse, the company was preparing for a major technology transition — migrating its entire enterprise resource planning system from a legacy JBA platform to a modern solution. The stakes were high. A botched migration could compound existing inefficiencies, amplify data quality issues, and expose the organization to serious operational risk.</p>
+
+      <div class="pull-quote">
+        <p>"Over $18 million in non-moving parts were clogging warehouse space, while 15% of the most critical components were regularly out of stock — a dual crisis of waste and scarcity."</p>
+      </div>
+
+      <h2>The Problem</h2>
+      <p>The challenges facing this manufacturer were deeply interconnected. At the surface level, the warehouse looked busy — but that busyness masked profound inefficiency.</p>
+
+      <div class="callout">
+        <div class="callout-title">Key Challenges Identified</div>
+        <ul>
+          <li>Over $18 million in non-moving "D" category parts occupied valuable storage space with no clear path to use or disposal</li>
+          <li>15% of "A" category critical parts — those essential to daily production — were frequently out of stock, causing delays</li>
+          <li>The existing ERP system contained poor-quality data, presenting a significant risk ahead of the planned migration</li>
+          <li>The physical warehouse layout had never been optimized around actual inventory movement patterns, leading to inefficient picking routes</li>
+          <li>Supply chain teams operated in functional silos with weak cross-department communication, preventing coordinated decision-making</li>
+        </ul>
+      </div>
+
+      <p>The root cause was a lack of structured inventory strategy. Without a formal classification framework, all parts were treated roughly equally — meaning fast-moving essentials competed for space with years-old surplus. The result was a warehouse that was full but not functional.</p>
+
+      <h2>The Approach</h2>
+      <p>Caresoft Global's consultants began with a comprehensive diagnostic: mapping inventory movement, auditing data quality, and interviewing stakeholders across procurement, operations, and logistics. What emerged was a clear picture of misalignment between how the warehouse was organized and how it actually needed to function.</p>
+      <p>The intervention unfolded in parallel workstreams:</p>
+
+      <div class="callout">
+        <div class="callout-title">Solution Framework</div>
+        <ul>
+          <li><strong>Plan for Every Part (PFEP):</strong> A master data document was created for each SKU, capturing usage rates, supplier lead times, and optimal storage locations</li>
+          <li><strong>ABC Classification:</strong> All inventory was segmented by movement frequency — "A" parts (fast-moving, critical) were repositioned to prime picking locations; "D" parts were flagged for disposition</li>
+          <li><strong>Warehouse Layout Redesign:</strong> Physical slotting was restructured so that high-frequency picks required the least travel distance, dramatically reducing picker walk time</li>
+          <li><strong>SOPs & Visual Management:</strong> Standardized operating procedures were introduced alongside visual cues — floor markings, labels, signage — to reduce errors and support new staff onboarding</li>
+          <li><strong>ERP Migration Support:</strong> Data cleansing was carried out before migration, user acceptance testing was structured, and teams received hands-on training on the new system</li>
+        </ul>
+      </div>
+
+      <h2>The Results</h2>
+      <p>The transformation delivered measurable gains across the key dimensions of the problem. Within the project timeline, the warehouse moved from reactive firefighting to a structured, data-driven operation.</p>
+
+      <div class="results-box callout">
+        <div class="callout-title">Measured Outcomes</div>
+        <ul>
+          <li>Value of non-moving "D" parts reduced by 30%, freeing up capital and reclaiming storage space for productive use</li>
+          <li>Picking productivity increased by 20%, driven by improved slotting and clearer operational workflows</li>
+          <li>ERP migration completed successfully, underpinned by improved data quality and structured change management</li>
+          <li>A continuous improvement foundation was established, giving the internal team tools and methods to sustain gains long-term</li>
+        </ul>
+      </div>
+
+      <h2>Key Takeaways</h2>
+      <p>This case study illustrates that warehouse transformation doesn't require a complete technology overhaul to achieve significant results. The most impactful changes here were analytical and organizational: classifying inventory properly, restructuring physical space around actual demand patterns, and ensuring data integrity before a system migration.</p>
+      <p>The combination of a Plan for Every Part with ABC classification is a proven methodology — but its power lies in execution. When every stakeholder understands how parts are categorized and why certain items live in certain locations, the whole system becomes more legible, more efficient, and more resilient to disruption.</p>
+
+      <div class="pull-quote">
+        <p>"The most powerful intervention wasn't technological — it was bringing structure, visibility, and shared language to inventory that had grown invisible through familiarity."</p>
+      </div>
+
+      <p>For organizations facing similar challenges — ERP transitions, chronic stockouts alongside excess inventory, or warehouse layouts that have grown organically without strategic intent — this case offers a clear template: start with the data, classify your inventory, redesign around movement, and build processes that sustain the gains.</p>
+
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Case at a Glance</div>
+        <div class="sidebar-fact">
+          <strong>Industry</strong>
+          <span>Manufacturing</span>
+        </div>
+        <div class="sidebar-fact">
+          <strong>Function</strong>
+          <span>Warehouse & Inventory Management</span>
+        </div>
+        <div class="sidebar-fact">
+          <strong>Technology</strong>
+          <span>ERP Migration (JBA → New Platform)</span>
+        </div>
+        <div class="sidebar-fact">
+          <strong>Methodology</strong>
+          <span>PFEP, ABC Classification, Lean Layout</span>
+        </div>
+        <div class="sidebar-fact">
+          <strong>Source</strong>
+          <span>Caresoft Global Case Study</span>
+        </div>
+      </div>
+
+      <div class="sidebar-card toc">
+        <div class="sidebar-card-title">In This Article</div>
+        <a href="#" onclick="document.querySelectorAll('h2')[0].scrollIntoView({behavior:'smooth'}); return false;">Background</a>
+        <a href="#" onclick="document.querySelectorAll('h2')[1].scrollIntoView({behavior:'smooth'}); return false;">The Problem</a>
+        <a href="#" onclick="document.querySelectorAll('h2')[2].scrollIntoView({behavior:'smooth'}); return false;">The Approach</a>
+        <a href="#" onclick="document.querySelectorAll('h2')[3].scrollIntoView({behavior:'smooth'}); return false;">The Results</a>
+        <a href="#" onclick="document.querySelectorAll('h2')[4].scrollIntoView({behavior:'smooth'}); return false;">Key Takeaways</a>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Related Concepts</div>
+        <div class="sidebar-fact"><span>Plan for Every Part (PFEP)</span></div>
+        <div class="sidebar-fact"><span>ABC Inventory Classification</span></div>
+        <div class="sidebar-fact"><span>Warehouse Slotting Optimization</span></div>
+        <div class="sidebar-fact"><span>ERP Data Migration</span></div>
+        <div class="sidebar-fact"><span>Visual Management (5S)</span></div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <hr class="section-rule" />
+
+  <footer>
+    Case study content based on publicly available research by Caresoft Global &nbsp;·&nbsp;
+    Compiled for educational purposes &nbsp;·&nbsp;
+    Supply Chain &amp; Operations Case Study Series
+  </footer>
+
+</body>
+</html>
